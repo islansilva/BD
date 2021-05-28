@@ -1,0 +1,40 @@
+{
+    "users": [
+        {
+            "login": "Islan",
+            "pass": "1234ab",
+            "nameAlias": "Islanzin"
+        },
+        {
+            "login": "Jso\b\bose",
+            "pass": "asjdfio",
+            "nameAlias": "iojsfd"
+        },
+        {
+            "login": "Josee",
+            "pass": "12323",
+            "nameAlias": "Hfus"
+        },
+        {
+            "login": "ijosfoi",
+            "pass": "sdfojiojdif",
+            "nameAlias": "ijosdf"
+        },
+        {
+            "login": "Islanzinho",
+            "pass": "12789398123\b\b\bvdsa",
+            "nameAlias": "12397812398"
+        },
+        {
+            "login": "iffjiadijfo",
+            "pass": "asdfjio",
+            "nameAlias": "adsfjio"
+        },
+        {
+            "login": "Alessandro",
+            "pass": "123456ab",
+            "nameAlias": "Alee"
+        }
+    ],
+    "count": 0
+}
