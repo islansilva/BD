@@ -1,6 +1,8 @@
 from socket import *
 from datetime import datetime
 from controlRequest import ControlRequest
+from funcoes.BatePapo import BatePapo
+
 
 
 class Server:
@@ -18,7 +20,8 @@ class Server:
         serverSocket.bind((self.ip, self.port))
         serverSocket.listen(1)
 
-        
+        rooms = BatePapo.createRoom();
+
 
         #self.connectionSocket = connectionSocket
         #self.addr = addr
