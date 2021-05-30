@@ -11,20 +11,19 @@ from controlSend import controlSend
 class Login():
 
     def __init__(self, conSocket):
-
-
-        dataUser = {'login': '', 'pass': '', 'nameAlias': ''}
-
-
         self.conSocket = conSocket
         self.controlSend = controlSend(conSocket)
         infoUser = {'login': '', 'pass': '', 'nameAlias': ''}
 
-        self.controlSend.send("Seja bem vindo (a) a mais badalada sala de bate papo do Brasil. \r\nPor favor, digite seu usuario e senha \r\n\r\nLogin:")
+        self.controlSend.send("Seja bem vindo (a) a mais badalada sala de bate papo do Brasil. \r\nPor favor, digite seu usuario e senha \r\n\r\nLogin: ")
 
         while  infoUser['login'][-1:] != "\n":
             infoUser['login'] = str(infoUser['login']) + str(conSocket.recv(1024).decode('UTF-8'))
-            
+            if(infoUser['login'][-1:] == "\b"):
+                  infoUser['login'] = str(infoUser['login']).replace("\b", "")
+                  self.controlSend.send("\u001b[0x08")
+     
+        infoUser['login'] = infoUser['login'].replace("\r\n", "")
 
         checkUser, dataJson = self.userExist(infoUser)
 
@@ -34,10 +33,10 @@ class Login():
             #Solicita a senha
             while infoUser['pass'].replace("\n", "").strip() == "":
                 infoUser['pass'] = ""
-                self.controlSend.send("Digite uma senha : \r\n")
+                self.controlSend.send("\r\nDigite uma senha: ")
 
                 while  infoUser['pass'][-1:] != "\n":
-                    infoUser['pass'] = str(infoUser['pass']) + str(conSocket.recv(1024).decode('UTF-8'))
+                    infoUser['pass'] = str(infoUser['pass']) + str(conSocket.recv(1024).decode('UTF-8')).replace("\b", "") 
 
                 #Realiza a comparação
                 if dataJson['pass'].strip() == infoUser['pass'].strip():
@@ -47,30 +46,31 @@ class Login():
                     self.controlSend.send("Senha incorreta\r\n")
 
         else:
-            self.controlSend.send("Opsss!!! Identificamos que voce nao esta registrado em nosso sistema. Mas isso nao e problema \r\n")
+            self.controlSend.send("LOGIN NAO EXISTE!!\r\n")
             
             #Digitar o nome do usuario para cadstro
             while infoUser['nameAlias'].replace("\n", "").strip() == "":
                 infoUser['nameAlias'] = ""
-                self.controlSend.send("Entao vamos la, digite como gostaria de ser identificado no bate papo: \r\n")
+                self.controlSend.send("Criar Login: \r\nNome de usuario: ")
 
                 while  infoUser['nameAlias'][-1:] != "\n":
-                    infoUser['nameAlias'] = str(infoUser['nameAlias']) + str(conSocket.recv(1024).decode('UTF-8'))
-            
+                    infoUser['nameAlias'] = str(infoUser['nameAlias']) + str(conSocket.recv(1024).decode('UTF-8')).replace("\b", "") 
+                print(infoUser['nameAlias'])
             #Digitar a senha para cadastro do usuário
             while infoUser['pass'].replace("\n", "").strip() == "":
                 infoUser['pass'] = ""
-                self.controlSend.send("Digite uma senha : \r\n")
+                self.controlSend.send("\r\nDigite uma senha: ")
 
                 while  infoUser['pass'][-1:] != "\n":
-                    infoUser['pass'] = str(infoUser['pass']) + str(conSocket.recv(1024).decode('UTF-8'))
-            
+                    infoUser['pass'] = str(infoUser['pass']) + str(conSocket.recv(1024).decode('UTF-8')).replace("\b", "") 
+                print(infoUser['nameAlias'])
+
                 infoUser['nameAlias'] = infoUser['nameAlias'].replace("\r\n","")
                 infoUser['pass'] =  infoUser['pass'].replace("\r\n","") 
                 infoUser['login'] = infoUser['login'].replace("\r\n","") 
 
             self.createUser(infoUser)
-            self.controlSend.send("Usuário criado com sucesso!!!")
+            self.controlSend.send("\r\nUsuario criado com sucesso!!!")
             self.loginSucesso()
 
 
@@ -78,10 +78,9 @@ class Login():
     def userExist(self, dataLogin, filename="db/user.json"):
         with open(filename) as json_file:
             data = json.load(json_file)
-
             for i in range(len(data['users'])):
-
-                if str(data['users'][i]['login']).strip() == dataLogin['login'].replace("\n", "").strip():
+                
+                if str(data['users'][i]['login']) == dataLogin['login'].replace("\n", ""):
                     json_file.close()
                     return True, data['users'][i]
 
@@ -106,5 +105,5 @@ class Login():
 
 
     def loginSucesso(self):
-        while True:
-            pass
+        self.controlSend.send("\u001B[2J")
+        self.controlSend.send("opa bom dia")
