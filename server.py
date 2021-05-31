@@ -2,8 +2,7 @@ from socket import *
 from datetime import datetime
 from controlRequest import ControlRequest
 from funcoes.BatePapo import BatePapo
-
-
+import settings
 
 class Server:
     def __init__(self, ip, port):
@@ -20,15 +19,10 @@ class Server:
         serverSocket.bind((self.ip, self.port))
         serverSocket.listen(1)
 
-        rooms = BatePapo.createRoom();
-
-
-        #self.connectionSocket = connectionSocket
-        #self.addr = addr
+        settings.rooms = BatePapo.createRoom()
 
         self.serverSocket = serverSocket
         self.data = data_formatada
 
-
+        print("--Servidor do BATE-PAPO inicializado!--")
         self.ControlRequest = ControlRequest(self)
-        #self.ControlRequest.start()

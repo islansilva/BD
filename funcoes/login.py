@@ -1,9 +1,8 @@
-from controlSend import controlSend
-import json
-import sys
 import os
-
-
+import sys
+import json
+from controlSend import controlSend
+from funcoes.colors import Cor
 from funcoes.BatePapo import BatePapo
 
 sys.path.append(os.path.abspath("../BatePapo"))
@@ -23,9 +22,10 @@ class Login():
             self.infoUser['login'] = str(
                 self.infoUser['login']) + str(conSocket.recv(1024).decode('UTF-8'))
             if(self.infoUser['login'][-1:] == "\b"):
-                self.infoUser['login'] = str(
-                    self.infoUser['login']).replace("\b", "")
-
+                self.infoUser['login'] = str(self.infoUser['login']).replace("\b", "")
+                self.infoUser['login'] = self.infoUser['login'][:-1]
+                self.controlSend.send("\u001B[J")
+    
         self.infoUser['login'] = self.infoUser['login'].replace("\r\n", "")
 
         checkUser, dataJson = self.userExist(self.infoUser)
@@ -40,7 +40,11 @@ class Login():
 
                 while self.infoUser['pass'][-1:] != "\n":
                     self.infoUser['pass'] = str(
-                        self.infoUser['pass']) + str(conSocket.recv(1024).decode('UTF-8')).replace("\b", "")
+                        self.infoUser['pass']) + str(conSocket.recv(1024).decode('UTF-8'))
+                    if(self.infoUser['pass'][-1:] == "\b"):
+                        self.infoUser['pass'] = str(self.infoUser['pass']).replace("\b", "")
+                        self.infoUser['pass'] = self.infoUser['pass'][:-1]
+                        self.controlSend.send("\u001B[J")    
 
                 # Realiza a comparação
                 if dataJson['pass'].strip() == self.infoUser['pass'].strip():
@@ -60,7 +64,11 @@ class Login():
 
                 while self.infoUser['nameAlias'][-1:] != "\n":
                     self.infoUser['nameAlias'] = str(
-                        self.infoUser['nameAlias']) + str(conSocket.recv(1024).decode('UTF-8')).replace("\b", "")
+                        self.infoUser['nameAlias']) + str(conSocket.recv(1024).decode('UTF-8'))
+                    if(self.infoUser['nameAlias'][-1:] == "\b"):
+                        self.infoUser['nameAlias'] = str(self.infoUser['nameAlias']).replace("\b", "")
+                        self.infoUser['nameAlias'] = self.infoUser['nameAlias'][:-1]
+                        self.controlSend.send("\u001B[J")
                 print(self.infoUser['nameAlias'])
             # Digitar a senha para cadastro do usuário
             while self.infoUser['pass'].replace("\n", "").strip() == "":
@@ -69,7 +77,11 @@ class Login():
 
                 while self.infoUser['pass'][-1:] != "\n":
                     self.infoUser['pass'] = str(
-                        self.infoUser['pass']) + str(conSocket.recv(1024).decode('UTF-8')).replace("\b", "")
+                        self.infoUser['pass']) + str(conSocket.recv(1024).decode('UTF-8'))
+                    if(self.infoUser['pass'][-1:] == "\b"):
+                        self.infoUser['pass'] = str(self.infoUser['pass']).replace("\b", "")
+                        self.infoUser['pass'] = self.infoUser['pass'][:-1]
+                        self.controlSend.send("\u001B[J")
                 print(self.infoUser['nameAlias'])
 
                 self.infoUser['nameAlias'] = self.infoUser['nameAlias'].replace(
@@ -115,13 +127,22 @@ class Login():
         self.controlSend.send("\u001B[2J")
         print(self)
         print(self.infoUser)
-        bemVindo = "BEEEEM VINDO " + \
-            str(self.infoUser['nameAlias']).upper() + "\n"
+        bemVindo = "Bem Vindo, {Cor.azul + str(self.infoUser['nameAlias']).upper() + Cor.reset}\r\n"
         self.controlSend.send(bemVindo)
         help = batePapo.commands()
         self.controlSend.send(help)
+        
 
         while True:
-            inputCom = batePapo.inputCommand(
-                str(self.conSocket.recv(1024).decode('UTF-8')))
-            self.controlSend.send(inputCom)
+
+            inputCom = ""
+
+            while  inputCom[-1:] != "\n":
+                inputCom = inputCom + str(self.conSocket.recv(1024).decode())
+
+                if(inputCom[-1:] == "\b"):
+                    inputCom = str(inputCom).replace("\b", "")
+                    inputCom = inputCom[:-1]
+                    self.controlSend.send("\u001B[J")
+
+            self.controlSend.send(batePapo.inputCommand(inputCom))

@@ -6,85 +6,49 @@
             "nameAlias": "Islanzin"
         },
         {
-            "login": "Jso\b\bose",
-            "pass": "asjdfio",
-            "nameAlias": "iojsfd"
+            "login": "alee",
+            "pass": "bizz",
+            "nameAlias": "alee"
+        },
+        {
+            "login": "pedro",
+            "pass": "aaa",
+            "nameAlias": "pedro"
+        },
+        {
+            "login": "el",
+            "pass": "ele",
+            "nameAlias": "ele"
+        },
+        {
+            "login": "\u001b[A\u001b[Aalee",
+            "pass": "vvvv",
+            "nameAlias": "bizz"
         },
         {
             "login": "Josee",
             "pass": "12323",
-            "nameAlias": "Hfus"
+            "nameAlias": "Jpsoosee"
         },
         {
-            "login": "ijosfoi",
-            "pass": "sdfojiojdif",
-            "nameAlias": "ijosdf"
-        },
-        {
-            "login": "Islanzinho",
-            "pass": "12789398123\b\b\bvdsa",
-            "nameAlias": "12397812398"
-        },
-        {
-            "login": "iffjiadijfo",
-            "pass": "asdfjio",
-            "nameAlias": "adsfjio"
-        },
-        {
-            "login": "Alessandro",
-            "pass": "123456ab",
-            "nameAlias": "Alee"
-        },
-        {
-            "login": "sajksajk",
-            "pass": "rsrs",
-            "nameAlias": "lukinhas \bpvp"
-        },
-        {
-            "login": "lukinhaspvp",
-            "pass": "123",
-            "nameAlias": "lukinhaspvp"
-        },
-        {
-            "login": "\\n",
-            "pass": "\\n",
-            "nameAlias": "\\n"
-        },
-        {
-            "login": "lukinhaspp",
-            "pass": "123",
-            "nameAlias": "lukunas\b\b\b"
-        },
-        {
-            "login": "oe",
-            "pass": "123",
-            "nameAlias": "pedro"
-        },
-        {
-            "login": "testeee",
-            "pass": "123",
-            "nameAlias": "testeznho123"
-        },
-        {
-            "login": "kkk",
-            "pass": "123123",
-            "nameAlias": "kkkrsrs"
-        },
-        {
-            "login": "Joeesee",
-            "pass": "123",
-            "nameAlias": "kkk"
-        },
-        {
-            "login": "josee",
+            "login": "lukaskunn",
             "pass": "12323",
-            "nameAlias": "Josee"
+            "nameAlias": "lukaskunn"
         },
         {
-            "login": "joJosee",
-            "pass": "1232323",
-            "nameAlias": "Josee"
+            "login": "ROOMS salinha",
+            "pass": "123",
+            "nameAlias": "ssdara"
+        },
+        {
+            "login": "voutestar",
+            "pass": "12323",
+            "nameAlias": "testeteste"
+        },
+        {
+            "login": "testetest",
+            "pass": "1236",
+            "nameAlias": "testee"
         }
-    ],
-    "count": 0
+    ]
 }
