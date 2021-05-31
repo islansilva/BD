@@ -22,9 +22,9 @@ class Login():
             self.infoUser['login'] = str(
                 self.infoUser['login']) + str(conSocket.recv(1024).decode('UTF-8'))
             if(self.infoUser['login'][-1:] == "\b"):
-                self.infoUser['login'] = str(
-                    self.infoUser['login']).replace("\b", "")
-
+                  self.infoUser['login'] = str(self.infoUser['login']).replace("\b", "")
+                  #self.controlSend.send("\u001b[0x08")
+     
         self.infoUser['login'] = self.infoUser['login'].replace("\r\n", "")
 
         checkUser, dataJson = self.userExist(self.infoUser)
@@ -122,6 +122,13 @@ class Login():
         
 
         while True:
-            inputCom = batePapo.inputCommand(
-                str(self.conSocket.recv(1024).decode('UTF-8')))
-            self.controlSend.send(inputCom)
+
+            inputCom = ""
+
+            while  inputCom[-1:] != "\n":
+                inputCom = inputCom + str(self.conSocket.recv(1024).decode())
+
+                if(inputCom[-1:] == "\b"):
+                  inputCom = str(inputCom).replace("\b", "")
+
+            self.controlSend.send(batePapo.inputCommand(inputCom))
