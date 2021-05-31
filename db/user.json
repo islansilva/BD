@@ -16,30 +16,14 @@
             "nameAlias": "pedro"
         },
         {
-            "login": "ape",
-            "pass": "aaa",
-            "nameAlias": "pedro"
+            "login": "el",
+            "pass": "ele",
+            "nameAlias": "ele"
         },
         {
-            "login": "a",
-            "pass": "pedro",
-            "nameAlias": "pr"
-        },
-        {
-            "login": "\u001b[Apedro",
-            "pass": "pedro",
-            "nameAlias": "pedro"
-        },
-        {
-            "login": "dadadadaddadadadadadadadddddale",
-            "pass": "alee123",
-            "nameAlias": "dale"
-        },
-        {
-            "login": "aleee",
-            "pass": "biz",
-            "nameAlias": "biz"
+            "login": "\u001b[A\u001b[Aalee",
+            "pass": "vvvv",
+            "nameAlias": "bizz"
         }
-    ],
-    "count": 0
+    ]
 }

@@ -1,8 +1,8 @@
 import os
 import sys
 import json
-
 from controlSend import controlSend
+from funcoes.colors import Cor
 from funcoes.BatePapo import BatePapo
 
 sys.path.append(os.path.abspath("../BatePapo"))
@@ -22,10 +22,10 @@ class Login():
             self.infoUser['login'] = str(
                 self.infoUser['login']) + str(conSocket.recv(1024).decode('UTF-8'))
             if(self.infoUser['login'][-1:] == "\b"):
-                  self.infoUser['login'] = str(self.infoUser['login']).replace("\b", "")
-                  self.infoUser['login'] = self.infoUser['login'][:-1]
-                  self.controlSend.send("\u001B[J")
-     
+                self.infoUser['login'] = str(self.infoUser['login']).replace("\b", "")
+                self.infoUser['login'] = self.infoUser['login'][:-1]
+                self.controlSend.send("\u001B[J")
+    
         self.infoUser['login'] = self.infoUser['login'].replace("\r\n", "")
 
         checkUser, dataJson = self.userExist(self.infoUser)
@@ -115,8 +115,7 @@ class Login():
         self.controlSend.send("\u001B[2J")
         print(self)
         print(self.infoUser)
-        bemVindo = "BEEEEM VINDO " + \
-            str(self.infoUser['nameAlias']).upper() + "\n"
+        bemVindo = f"Bem Vindo, {Cor.azul + str(self.infoUser['nameAlias']).upper() + Cor.reset}\r\n"
         self.controlSend.send(bemVindo)
         help = batePapo.commands()
         self.controlSend.send(help)
@@ -130,6 +129,8 @@ class Login():
                 inputCom = inputCom + str(self.conSocket.recv(1024).decode())
 
                 if(inputCom[-1:] == "\b"):
-                  inputCom = str(inputCom).replace("\b", "")
+                    inputCom = str(inputCom).replace("\b", "")
+                    inputCom = inputCom[:-1]
+                    self.controlSend.send("\u001B[J")
 
             self.controlSend.send(batePapo.inputCommand(inputCom))

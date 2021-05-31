@@ -19,7 +19,6 @@ class Server:
         serverSocket.bind((self.ip, self.port))
         serverSocket.listen(1)
 
-
         settings.rooms = BatePapo.createRoom()
 
         self.serverSocket = serverSocket
@@ -27,4 +26,3 @@ class Server:
 
         print("--Servidor do BATE-PAPO inicializado!--")
         self.ControlRequest = ControlRequest(self)
-        #self.ControlRequest.start()
