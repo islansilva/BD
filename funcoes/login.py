@@ -23,7 +23,8 @@ class Login():
                 self.infoUser['login']) + str(conSocket.recv(1024).decode('UTF-8'))
             if(self.infoUser['login'][-1:] == "\b"):
                   self.infoUser['login'] = str(self.infoUser['login']).replace("\b", "")
-                  #self.controlSend.send("\u001b[0x08")
+                  self.infoUser['login'] = self.infoUser['login'][:-1]
+                  self.controlSend.send("\u001B[J")
      
         self.infoUser['login'] = self.infoUser['login'].replace("\r\n", "")
 

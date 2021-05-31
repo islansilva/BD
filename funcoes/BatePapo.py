@@ -1,87 +1,96 @@
+from controlSend import controlSend
+from funcoes.colors import Cor
 import settings
+import os
+import sys
+import time
+
+sys.path.append(os.path.abspath("../BatePapo"))
+
 
 class BatePapo:
-    
 
     def __init__(self, userData):
-        pass
-
+        self.conexao = userData
+        self.salaLogado = ""
 
     @staticmethod
     def createRoom():
 
-        #0 =  Nome
-        #1 =  Sockets
+        # 0 =  Nome
+        # 1 =  Sockets
         arrRoom = [['Futebol', [], []], ['Namoro', [], []], ['Carros', [], []]]
-
 
         return arrRoom
 
     def commands(self):
-        exibeComando = """\r
-INSERT \t\t ENVIAR MENSAGEM \r
-ONLINE \t\t VERIFICAR USUARIOS ONLINE \r
-ROOMS \t\t SALAS EXISTENTES \r
-CREATEROOMS \t CRIAR NOVAS SALAS DE BATE PAPO \r
-ENTERROOMS \t ENTRAR EM UMA SALA \r
-EXITROOMS \t SAIR DA SALA \r
-QUIT \t\t ENCERRA A CONEXAO E SAI DO BATE PAPO \r
-HELP \t\t PARA LISTAR OS COMANDOS \r""" 
-
         exibeComando = f"""\r
-{self.cores.vermelho}INSERT {self.cores.reset}\t\t ENVIAR MENSAGEM \r
-{self.cores.vermelho}ONLINE {self.cores.reset}\t\t VERIFICAR USUARIOS ONLINE \r
-{self.cores.vermelho}ROOMS {self.cores.reset}\t\t SALAS EXISTENTES \r
-{self.cores.vermelho}CREATEROOMS {self.cores.reset}\t CRIAR NOVAS SALAS DE BATE PAPO \r
-{self.cores.vermelho}ENTERROOMS {self.cores.reset}\t ENTRAR EM UMA SALA \r
-{self.cores.vermelho}EXITROOMS {self.cores.reset}\t SAIR DA SALA \r
-{self.cores.vermelho}QUIT {self.cores.reset}\t\t ENCERRA A CONEXAO E SAI DO BATE PAPO \r
-{self.cores.vermelho}HELP {self.cores.reset}\t\t PARA LISTAR OS COMANDOS \r\n"""
+{Cor.vermelho}ENTER{Cor.reset} \t\t INGRESSAR NA SALA \r
+{Cor.vermelho}CHAT{Cor.reset} \t\t ENVIAR MENSAGEM \r
+{Cor.vermelho}ONLINE{Cor.reset} \t\t VERIFICAR USUARIOS ONLINE \r
+{Cor.vermelho}ROOMS{Cor.reset} \t\t SALAS EXISTENTES \r
+{Cor.vermelho}CREATEROOMS{Cor.reset} \t CRIAR NOVAS SALAS DE BATE PAPO \r
+{Cor.vermelho}EXITROOMS{Cor.reset} \t SAIR DA SALA \r
+{Cor.vermelho}QUIT{Cor.reset} \t\t ENCERRA A CONEXAO E SAI DO BATE PAPO \r
+{Cor.vermelho}HELP{Cor.reset} \t\t PARA LISTAR OS COMANDOS \r\n"""
+
         return exibeComando
 
-        
-    def inputCommand(self, inputText):
+    def broadcast(self, clients, msg):
 
-        #dispCommands = ['INSERT', 'ONLINE', 'ROOMS', 'CREATEROOMS', 'ENTERROOMS', 'EXITROOMS', 'QUIT', 'HELP']
+        for sock in clients:
+            if sock != self.conexao.conSocket:
+                enviamsg = controlSend(sock)
+                enviamsg.send("\r" + str(msg))
+
+    def inputCommand(self, inputText):
 
         print(settings.rooms)
         splitTexto = inputText.split(" ")
+        print(splitTexto)
 
         if splitTexto[0] == 'ENTER':
-            #VERIFICA SE A SALA EXISTE
+            # VERIFICA SE A SALA EXISTE
             for i in range(len(settings.rooms)):
-                
+
                 campoProc = splitTexto[1].replace('\r\n', "").strip()
                 if campoProc == settings.rooms[i][0]:
-                    self.salaLogado = campoProc;
-                    self.broadcast(settings.rooms[i][1], str(self.conexao.infoUser['nameAlias']) + " entrou na sala")
+                    self.salaLogado = campoProc
+                    self.broadcast(settings.rooms[i][1], str(
+                        self.conexao.infoUser['nameAlias']) + " entrou na sala\r\n")
 
                     settings.rooms[i][1].append(self.conexao.conSocket)
-                    settings.rooms[i][2].append(self.conexao.infoUser['nameAlias'])
-                    
-                    return "\rIngressando na sala...\r\n"
-            print(settings.rooms)
+                    settings.rooms[i][2].append(
+                        self.conexao.infoUser['nameAlias'])
+                    self.conexao.controlSend.send("\rIngressando na sala...")
+                    time.sleep(2)
+                    return f"\r\n{Cor.verde}Tudo OK !!!{Cor.reset} \r\n"
+
             return "\rSALA INEXISTENTE\r\n"
         elif splitTexto[0] == "CHAT":
 
             if self.salaLogado == "":
                 return "\rEntre em uma sala para enviar msg...\r\n"
 
-
             for i in range(len(settings.rooms)):
 
                 if self.salaLogado == settings.rooms[i][0]:
-                    self.broadcast(settings.rooms[i][1],self.conexao.infoUser['nameAlias'] + ": " + str(" ".join(splitTexto[1:])))
+                    self.broadcast(
+                        settings.rooms[i][1], self.conexao.infoUser['nameAlias'] + ": " + str(" ".join(splitTexto[1:])))
                     return ""
-        
+
         elif splitTexto[0] == "ONLINE":
             if self.salaLogado == "":
-                return "\rEntre em uma sala para verificar usuários online...\r\n"
-
+                return "\rEntre em uma sala para verificar usuarios online...\r\n"
+            
+            users = "Usuarios online:\r\n-> "
 
             for i in range(len(settings.rooms)):
-                for x in settings.rooms[i][2]:
-                    self.broadcast(str(settings.rooms[i][2][x]) + " esta online")
+                if settings.rooms[i][0]== self.salaLogado:
+                    print(settings.rooms[i][2])
+                    users += '\r\n-> '.join(settings.rooms[i][2])
+            users += "\r\n"
+            return users
 
         elif splitTexto[0] == "ROOMS":
             salas = ""
@@ -92,7 +101,7 @@ HELP \t\t PARA LISTAR OS COMANDOS \r"""
             return salas
 
         elif splitTexto[0] == "CREATEROOMS":
-            
+
             sala = splitTexto[1].replace('\r\n', "").strip()
 
             if sala == "":

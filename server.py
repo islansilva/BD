@@ -20,16 +20,11 @@ class Server:
         serverSocket.listen(1)
 
 
-        settings.rooms = BatePapo.createRoom();
-        print(settings.rooms)
-
-
-        #self.connectionSocket = connectionSocket
-        #self.addr = addr
+        settings.rooms = BatePapo.createRoom()
 
         self.serverSocket = serverSocket
         self.data = data_formatada
 
-
+        print("--Servidor do BATE-PAPO inicializado!--")
         self.ControlRequest = ControlRequest(self)
         #self.ControlRequest.start()
