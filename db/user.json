@@ -74,6 +74,16 @@
             "login": "Joeesee",
             "pass": "123",
             "nameAlias": "kkk"
+        },
+        {
+            "login": "Islan1z",
+            "pass": "1234ab",
+            "nameAlias": "Islanzin"
+        },
+        {
+            "login": "ENT",
+            "pass": "1234ab",
+            "nameAlias": "\u001bOSEntrando"
         }
     ],
     "count": 0
