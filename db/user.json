@@ -74,6 +74,11 @@
             "login": "Joeesee",
             "pass": "123",
             "nameAlias": "kkk"
+        },
+        {
+            "login": "alee",
+            "pass": "bizz",
+            "nameAlias": "alee"
         }
     ],
     "count": 0

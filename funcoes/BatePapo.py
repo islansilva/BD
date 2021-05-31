@@ -1,8 +1,17 @@
+import sys
+from socket import *
+from funcoes.colors import Cor
+
+from controlSend import controlSend
+
 class BatePapo:
     
 
     def __init__(self, userData):
+        self.cores = Cor()
+        self.userData = userData
         pass
+
 
     @staticmethod
     def createRoom():
@@ -14,17 +23,18 @@ class BatePapo:
         return arrRoom
 
     def commands(self):
-        exibeComando = """\r
-INSERT \t\t ENVIAR MENSAGEM \r
-ONLINE \t\t VERIFICAR USUARIOS ONLINE \r
-ROOMS \t\t SALAS EXISTENTES \r
-CREATEROOMS \t CRIAR NOVAS SALAS DE BATE PAPO \r
-ENTERROOMS \t ENTRAR EM UMA SALA \r
-EXITROOMS \t SAIR DA SALA \r
-QUIT \t\t ENCERRA A CONEXAO E SAI DO BATE PAPO \r
-HELP \t\t PARA LISTAR OS COMANDOS \r""" 
 
+        exibeComando = f"""\r
+{self.cores.vermelho}INSERT {self.cores.reset}\t\t ENVIAR MENSAGEM \r
+{self.cores.vermelho}ONLINE {self.cores.reset}\t\t VERIFICAR USUARIOS ONLINE \r
+{self.cores.vermelho}ROOMS {self.cores.reset}\t\t SALAS EXISTENTES \r
+{self.cores.vermelho}CREATEROOMS {self.cores.reset}\t CRIAR NOVAS SALAS DE BATE PAPO \r
+{self.cores.vermelho}ENTERROOMS {self.cores.reset}\t ENTRAR EM UMA SALA \r
+{self.cores.vermelho}EXITROOMS {self.cores.reset}\t SAIR DA SALA \r
+{self.cores.vermelho}QUIT {self.cores.reset}\t\t ENCERRA A CONEXAO E SAI DO BATE PAPO \r
+{self.cores.vermelho}HELP {self.cores.reset}\t\t PARA LISTAR OS COMANDOS \r\n"""
         return exibeComando
+
 
         
     def inputCommand(self, inputText):

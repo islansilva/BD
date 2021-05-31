@@ -1,9 +1,8 @@
-from controlSend import controlSend
-import json
-import sys
 import os
+import sys
+import json
 
-
+from controlSend import controlSend
 from funcoes.BatePapo import BatePapo
 
 sys.path.append(os.path.abspath("../BatePapo"))
@@ -120,6 +119,7 @@ class Login():
         self.controlSend.send(bemVindo)
         help = batePapo.commands()
         self.controlSend.send(help)
+        
 
         while True:
             inputCom = batePapo.inputCommand(
