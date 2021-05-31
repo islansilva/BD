@@ -1,3 +1,5 @@
+import settings
+
 class BatePapo:
     
 
