@@ -86,6 +86,7 @@ class BatePapo:
                         f"\r\n{Cor.verde}Tudo OK !!!{Cor.reset}\r\n")
                     time.sleep(1)
                     self.conexao.controlSend.send("\u001B[2J")
+                    self.conexao.controlSend.send("\033[H")
                     sala = f"| SALA {Cor.verde}{self.salaLogado}{Cor.reset} | {len(settings.rooms[i][2])} online |"
                     return f"""\r{"-"*(len(sala)-9)}\r
 {sala}\r
@@ -159,6 +160,7 @@ Bem vindo a sala {Cor.verde}{self.salaLogado}{Cor.reset} ! Digite o comando {Cor
                         f"{Cor.verde}Tudo OK !!!{Cor.reset}\r\n")
                     time.sleep(1)
                     self.conexao.controlSend.send("\u001B[2J")
+                    self.conexao.controlSend.send("\033[H")
                     return self.commands()
 
         elif splitTexto[0] == "QUIT":

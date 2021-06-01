@@ -2,7 +2,6 @@ import os
 import sys
 import time
 import json
-import settings
 from controlSend import controlSend
 from funcoes.colors import Cor
 from funcoes.BatePapo import BatePapo
@@ -20,6 +19,8 @@ class Login():
         self.login = ""
         self.nickname = ""
         self.password = ""
+        self.controlSend.send("\u001B[2J")
+        self.controlSend.send("\033[H")
         self.controlSend.send(
             f"Seja bem vindo (a) a mais badalada sala de bate papo do Brasil.\r\nCOMANDOS:\r\n")
         self.controlSend.send(self.commands())
@@ -156,7 +157,8 @@ class Login():
 
         batePapo = BatePapo(self)
         self.controlSend.send("\u001B[2J")
-        bemVindo = f"Bem Vindo, {Cor.azul + str(self.infoUser['nameAlias']).upper() + Cor.reset}\r\n"
+        self.controlSend.send("\033[H")
+        bemVindo = f"\rBem Vindo, {Cor.azul + str(self.infoUser['nameAlias']).upper() + Cor.reset}\r\n"
         self.controlSend.send(bemVindo)
         help = batePapo.commands()
         self.controlSend.send(help)
@@ -176,6 +178,6 @@ class Login():
                 clientMessage = batePapo.inputCommand(inputCom)
                 
                 self.controlSend.send(clientMessage)
-            except ConnectionAbortedError:
+            except:
                 break
 
