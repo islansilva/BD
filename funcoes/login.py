@@ -41,6 +41,9 @@ class Login():
                 while self.infoUser['pass'][-1:] != "\n":
                     self.infoUser['pass'] = str(
                         self.infoUser['pass']) + str(conSocket.recv(1024).decode('UTF-8'))
+                    self.controlSend.send("\u001B[J")
+                    self.controlSend.send("\u001B[J")
+                    # self.controlSend.send("*")
                     if(self.infoUser['pass'][-1:] == "\b"):
                         self.infoUser['pass'] = str(self.infoUser['pass']).replace("\b", "")
                         self.infoUser['pass'] = self.infoUser['pass'][:-1]
@@ -127,7 +130,7 @@ class Login():
         self.controlSend.send("\u001B[2J")
         print(self)
         print(self.infoUser)
-        bemVindo = "Bem Vindo, {Cor.azul + str(self.infoUser['nameAlias']).upper() + Cor.reset}\r\n"
+        bemVindo = f"Bem Vindo, {Cor.azul + str(self.infoUser['nameAlias']).upper() + Cor.reset}\r\n"
         self.controlSend.send(bemVindo)
         help = batePapo.commands()
         self.controlSend.send(help)

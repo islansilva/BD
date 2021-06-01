@@ -30,7 +30,7 @@ class BatePapo:
 {Cor.vermelho}ONLINE{Cor.reset} \t\t VERIFICAR USUARIOS ONLINE \r
 {Cor.vermelho}ROOMS{Cor.reset} \t\t SALAS EXISTENTES \r
 {Cor.vermelho}CREATEROOMS{Cor.reset} \t CRIAR NOVAS SALAS DE BATE PAPO \r
-{Cor.vermelho}EXITROOMS{Cor.reset} \t SAIR DA SALA \r
+{Cor.vermelho}EXITROOM{Cor.reset} \t SAIR DA SALA \r
 {Cor.vermelho}QUIT{Cor.reset} \t\t ENCERRA A CONEXAO E SAI DO BATE PAPO \r
 {Cor.vermelho}HELP{Cor.reset} \t\t PARA LISTAR OS COMANDOS \r
 -----------------------|-----------------------\r\n"""
@@ -102,7 +102,7 @@ Bem vindo a sala {Cor.verde}{self.salaLogado}{Cor.reset} ! Digite o comando {Cor
             for i in range(len(settings.rooms)):
                 if settings.rooms[i][0] == self.salaLogado:
                     print(settings.rooms[i][2])
-                    users += '\r\n{Cor.amarelo}->{Cor.reset} '.join(
+                    users += f'\r\n{Cor.amarelo}->{Cor.reset} '.join(
                         settings.rooms[i][2])
             users += "\r\n"
             return users
@@ -128,17 +128,20 @@ Bem vindo a sala {Cor.verde}{self.salaLogado}{Cor.reset} ! Digite o comando {Cor
             settings.rooms.append([sala, [], []])
             return f"Sala {Cor.verde}{sala}{Cor.reset} criada com sucesso!\r\n"
 
-        elif splitTexto[0] == "EXITROOMS":
-            sala = splitTexto[1].strip()
-            if self.salaLogado != sala:
-                return f"Voce nao esta na sala {Cor.verde}{sala}{Cor.reset}!\r\n"
+        elif splitTexto[0] == "EXITROOM":
+            if self.salaLogado == "":
+                return f"Voce nao esta em nenhuma sala!\r\n"
             for i in range(len(settings.rooms)):
                 if settings.rooms[i][0] == self.salaLogado:
                     self.salaLogado = ""
                     settings.rooms[i][1].remove(self.conexao.conSocket)
                     settings.rooms[i][2].remove(
                         self.conexao.infoUser['nameAlias'])
-                    return 'Voltando a sala principal...\r\n'
+                    self.broadcast(
+                        settings.rooms[i][1], f"{Cor.azul +self.conexao.infoUser['nameAlias'] + Cor.reset} saiu da sala ;(\r\n")
+                    self.conexao.controlSend.send(f'Voltando a sala principal{Cor.vermelho}...{Cor.reset}\r\n')
+                    time.sleep(2)
+                    return f"{Cor.verde}Tudo OK !!!{Cor.reset}\r\n"
 
         elif splitTexto[0] == "QUIT":
             if not (self.salaLogado):
