@@ -16,6 +16,6 @@ class ControlRequest():
             connectionSocket, addr = self.server.serverSocket.accept()
 
             #informações da conexão
-            print("Cliente {} conectado ao servidor".format(connectionSocket, addr))
+            """ print("Cliente {} conectado ao servidor".format(connectionSocket, addr)) """
 
             Thread(target=Login, args=(connectionSocket,)).start()

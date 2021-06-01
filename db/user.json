@@ -9,46 +9,6 @@
             "login": "alee",
             "pass": "bizz",
             "nameAlias": "alee"
-        },
-        {
-            "login": "pedro",
-            "pass": "aaa",
-            "nameAlias": "pedro"
-        },
-        {
-            "login": "el",
-            "pass": "ele",
-            "nameAlias": "ele"
-        },
-        {
-            "login": "\u001b[A\u001b[Aalee",
-            "pass": "vvvv",
-            "nameAlias": "bizz"
-        },
-        {
-            "login": "Josee",
-            "pass": "12323",
-            "nameAlias": "Jpsoosee"
-        },
-        {
-            "login": "lukaskunn",
-            "pass": "12323",
-            "nameAlias": "lukaskunn"
-        },
-        {
-            "login": "ROOMS salinha",
-            "pass": "123",
-            "nameAlias": "ssdara"
-        },
-        {
-            "login": "voutestar",
-            "pass": "12323",
-            "nameAlias": "testeteste"
-        },
-        {
-            "login": "testetest",
-            "pass": "1236",
-            "nameAlias": "testee"
         }
     ]
 }

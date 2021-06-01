@@ -41,8 +41,19 @@ class BatePapo:
 
         for sock in clients:
             if sock != self.conexao.conSocket:
-                enviamsg = controlSend(sock)
-                enviamsg.send("\r" + str(msg))
+                try:
+                    enviamsg = controlSend(sock)
+                    enviamsg.send("\r" + str(msg))
+                except ConnectionAbortedError:
+                    for i in range(len(settings.rooms)):
+                        if settings.rooms[i][0] == self.salaLogado:
+                            for j in range (len(settings.rooms[i][1])):
+                                if settings.rooms[i][1][j] == sock:
+                                    nick = settings.rooms[i][2][j]
+                                    settings.rooms[i][1].remove(sock)
+                                    settings.rooms[i][2].remove(nick)
+                                    break
+                            break
 
     def selfBroadcast(self, msg):
         enviamsg = controlSend(self.conexao.conSocket)
@@ -51,7 +62,7 @@ class BatePapo:
     def inputCommand(self, inputText):
         splitTexto = inputText.split(" ")
         splitTexto[0] = splitTexto[0].strip()
-        print(settings.rooms)
+
         if splitTexto[0] == 'ENTER':
             # VERIFICA SE JA ESTÁ EM UMA SALA
             if self.salaLogado != "":
@@ -73,9 +84,10 @@ class BatePapo:
                     time.sleep(2)
                     self.conexao.controlSend.send(
                         f"\r\n{Cor.verde}Tudo OK !!!{Cor.reset}\r\n")
+                    time.sleep(1)
+                    self.conexao.controlSend.send("\u001B[2J")
                     sala = f"| SALA {Cor.verde}{self.salaLogado}{Cor.reset} | {len(settings.rooms[i][2])} online |"
-                    return f"""\r
-{"-"*(len(sala)-9)}\r
+                    return f"""\r{"-"*(len(sala)-9)}\r
 {sala}\r
 {"-"*(len(sala)-9)}\r
 Bem vindo a sala {Cor.verde}{self.salaLogado}{Cor.reset} ! Digite o comando {Cor.vermelho}CHAT{Cor.reset} para conversar\r
@@ -91,7 +103,7 @@ Bem vindo a sala {Cor.verde}{self.salaLogado}{Cor.reset} ! Digite o comando {Cor
                 if self.salaLogado == settings.rooms[i][0]:
                     self.broadcast(
                         settings.rooms[i][1], f"{Cor.azul}{self.conexao.infoUser['nameAlias']}{Cor.reset} : {str(' '.join(splitTexto[1:]))}")
-                    return ""
+                    return f"{Cor.magenta}Eu{Cor.reset}: {str(' '.join(splitTexto[1:]))}"
 
         elif splitTexto[0] == "ONLINE":
             if self.salaLogado == "":
@@ -101,7 +113,6 @@ Bem vindo a sala {Cor.verde}{self.salaLogado}{Cor.reset} ! Digite o comando {Cor
 
             for i in range(len(settings.rooms)):
                 if settings.rooms[i][0] == self.salaLogado:
-                    print(settings.rooms[i][2])
                     users += f'\r\n{Cor.amarelo}->{Cor.reset} '.join(
                         settings.rooms[i][2])
             users += "\r\n"
@@ -120,13 +131,16 @@ Bem vindo a sala {Cor.verde}{self.salaLogado}{Cor.reset} ! Digite o comando {Cor
             if self.salaLogado != "":
                 return f"{Cor.ciano}VOCE JA ESTA EM UMA SALA{Cor.reset}, use o comando {Cor.vermelho}EXITROOM{Cor.reset}\r\n"
 
-            sala = splitTexto[1].replace('\r\n', "").strip()
+            try:
+                sala = splitTexto[1].strip()
+            except:
+                return "\rInforme o nome de uma sala\r\n"
 
             if sala == "":
                 return "\rInforme o nome de uma sala\r\n"
-
-            settings.rooms.append([sala, [], []])
-            return f"Sala {Cor.verde}{sala}{Cor.reset} criada com sucesso!\r\n"
+            else:
+                settings.rooms.append([sala, [], []])
+                return f"Sala {Cor.verde}{sala}{Cor.reset} criada com sucesso!\r\n"
 
         elif splitTexto[0] == "EXITROOM":
             if self.salaLogado == "":
@@ -141,15 +155,20 @@ Bem vindo a sala {Cor.verde}{self.salaLogado}{Cor.reset} ! Digite o comando {Cor
                         settings.rooms[i][1], f"{Cor.azul +self.conexao.infoUser['nameAlias'] + Cor.reset} saiu da sala ;(\r\n")
                     self.conexao.controlSend.send(f'Voltando a sala principal{Cor.vermelho}...{Cor.reset}\r\n')
                     time.sleep(2)
-                    return f"{Cor.verde}Tudo OK !!!{Cor.reset}\r\n"
+                    self.conexao.controlSend.send(
+                        f"{Cor.verde}Tudo OK !!!{Cor.reset}\r\n")
+                    time.sleep(1)
+                    self.conexao.controlSend.send("\u001B[2J")
+                    return self.commands()
 
         elif splitTexto[0] == "QUIT":
+            cliente = {'sala': self.salaLogado, 'sock': str(self.conexao.conSocket), 'nick': self.conexao.infoUser['nameAlias']}
             if not (self.salaLogado):
                 self.selfBroadcast(
-                    f"Ate a proxima {Cor.azul + self.conexao.infoUser['nameAlias'].upper() + Cor.reset}!\r")
+                    f"Ate a proxima {Cor.azul + self.conexao.infoUser['nameAlias'].upper() + Cor.reset}!")
                 time.sleep(2)
                 self.conexao.conSocket.close()
-                return ""
+                return cliente
             for i in range(len(settings.rooms)):
                 if settings.rooms[i][0] == self.salaLogado:
                     self.salaLogado = ""
@@ -157,15 +176,15 @@ Bem vindo a sala {Cor.verde}{self.salaLogado}{Cor.reset} ! Digite o comando {Cor
                     settings.rooms[i][2].remove(
                         self.conexao.infoUser['nameAlias'])
                     self.selfBroadcast(
-                        f"Ate a proxima {Cor.azul + self.conexao.infoUser['nameAlias'].upper() + Cor.reset}!\r\n")
+                        f"Ate a proxima {Cor.azul + self.conexao.infoUser['nameAlias'].upper() + Cor.reset}!")
                     self.broadcast(
                         settings.rooms[i][1], f"{Cor.azul +self.conexao.infoUser['nameAlias'] + Cor.reset} saiu da sala ;(\r\n")
                     time.sleep(2)
                     self.conexao.conSocket.close()
-                    return ""
+                    return cliente
 
         elif splitTexto[0] == "HELP":
-            print('to aqui')
+
             help = self.commands()
             return help
 

@@ -7,5 +7,5 @@ class controlSend():
     
     
     def send(self, msg):
-        msgSend = str(msg).encode('UTF-8')
+        msgSend = str(msg).encode('latin-1')
         self.conSocket.send(msgSend)
