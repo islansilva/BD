@@ -42,7 +42,6 @@ class Login():
                     self.infoUser['pass'] = str(
                         self.infoUser['pass']) + str(conSocket.recv(1024).decode('UTF-8'))
                     self.controlSend.send("\u001B[J")
-                    self.controlSend.send("\u001B[J")
                     # self.controlSend.send("*")
                     if(self.infoUser['pass'][-1:] == "\b"):
                         self.infoUser['pass'] = str(self.infoUser['pass']).replace("\b", "")

@@ -118,7 +118,7 @@ Bem vindo a sala {Cor.verde}{self.salaLogado}{Cor.reset} ! Digite o comando {Cor
         elif splitTexto[0] == "CREATEROOMS":
             # VERIFICA SE JA ESTÁ EM UMA SALA
             if self.salaLogado != "":
-                return f"{Cor.ciano}VOCE JA ESTA EM UMA SALA{Cor.reset}, use o comando {Cor.vermelho}EXITROOMS{Cor.reset}\r\n"
+                return f"{Cor.ciano}VOCE JA ESTA EM UMA SALA{Cor.reset}, use o comando {Cor.vermelho}EXITROOM{Cor.reset}\r\n"
 
             sala = splitTexto[1].replace('\r\n', "").strip()
 
