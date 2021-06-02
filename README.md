@@ -16,10 +16,10 @@ Primeira coisa ao baixar o arquivo é iniciar do diretório Projeto1 o arquivo <
 ```bash
 
 # Clone o repositório
-git clone https://github.com/islansilva/BD.git
+git clone https://github.com/islansilva/BatePapo_Redes.git
 
 # Acesse o projeto
-cd BD
+cd BatePapo_Redes
 
 # Run
 python main.py
