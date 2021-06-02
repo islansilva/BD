@@ -29,7 +29,14 @@ python3 main.py
 ```
 
 ## :book: COMANDOS
-Todos os comandos devem ser inseridos com letra maiúsculas, caso seja inserido com minúscula o programa recusará
+Todos os comandos devem ser inseridos com letra maiúsculas, caso seja inserido com minúscula o programa recusará, os comandos são exibidos apenas ao usuário que inseriu, as únicas mensagens compartilhadas são as conversas nas salas.  Primeiro comando para iniciar um cliente no servidor a seguir:
+
+```bash
+
+# Inicia cada cliente Telnet
+$ telnet localhost 8000
+
+```
 
 * LOGIN<br />
 O comando LOGIN é usado para realizar o login. Recebe os parâmetros login e senha, caso o login exista e a senha esteja correta o usuário é redirecionado ao bate-papo:
@@ -57,7 +64,7 @@ O comando CHAT é usado para conversar em uma sala. Recebe qualquer quantidade d
 ![chat](https://github.com/islansilva/BD/blob/master/images/chat.png) 
 
 * ONLINE<br />
-O comando USER é usado para visualizar quem está online na sala. Não recebe parâmetro, o usuário <b>deve</b> estar em uma sala:
+O comando ONLINE é usado para visualizar quem está online na sala. Não recebe parâmetro, o usuário <b>deve</b> estar em uma sala:
 
 ![online](https://github.com/islansilva/BD/blob/master/images/online.png) 
 
