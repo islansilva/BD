@@ -34,54 +34,54 @@ Todos os comandos devem ser inseridos com letra maiúsculas, caso seja inserido 
 * LOGIN<br />
 O comando LOGIN é usado para realizar o login. Recebe os parâmetros login e senha, caso o login exista e a senha esteja correta o usuário é redirecionado ao bate-papo:
 
-<img src = "https://github.com/islansilva/BD/blob/master/images/login.png" width = 500 height = 250 />
+![login](https://github.com/islansilva/BD/blob/master/images/login.png) 
 
 * USER<br />
 O comando USER é usado para criar um nickname. Recebe o parâmetro nickname, pode ser inserido caso o login não exista e o usuário deseja criar um novo:
 
-<img src = "https://github.com/islansilva/BD/blob/master/images/user.png" width = 510 height = 280 />
+![user](https://github.com/islansilva/BD/blob/master/images/user.png) 
 
 * PASS<br />
 O comando PASS é usado para criar uma senha. Recebe o parâmetro senha, pode ser inserido caso o login não exista e o usuário deseja criar um novo:
 
-<img src = "https://github.com/islansilva/BD/blob/master/images/pass.png" width = 510 height = 320 />
+![pass](https://github.com/islansilva/BD/blob/master/images/pass.png) 
 
 * ENTER<br />
 O comando ENTER é usado para entrar em uma sala. Recebe o parâmetro sala, caso ela exista, o usuário acessa:
 
-<img src = "https://github.com/islansilva/BD/blob/master/images/enter.png" width = 550 height = 250 />
+![enter](https://github.com/islansilva/BD/blob/master/images/enter.png) 
 
 * CHAT<br />
 O comando CHAT é usado para conversar em uma sala. Recebe qualquer quantidade de parâmetros para ser a frase, o usuário <b>deve</b> estar em uma sala:
 
-<img src = "https://github.com/islansilva/BD/blob/master/images/chat.png" width = 500 height = 210 />
+![chat](https://github.com/islansilva/BD/blob/master/images/chat.png) 
 
 * ONLINE<br />
 O comando USER é usado para visualizar quem está online na sala. Não recebe parâmetro, o usuário <b>deve</b> estar em uma sala:
 
-<img src = "https://github.com/islansilva/BD/blob/master/images/online.png" width = 500 height = 230 />
+![online](https://github.com/islansilva/BD/blob/master/images/online.png) 
 
 * ROOMS<br />
 O comando ROOMS é usado para verificar as salas disponíveis. Não recebe parâmetro, o usuário pode inserir o comando estando ou não em uma sala:
 
-<img src = "https://github.com/islansilva/BD/blob/master/images/rooms.png" width = 500 height = 330 />
+![rooms](https://github.com/islansilva/BD/blob/master/images/rooms.png) 
 
 * CREATEROOMS<br />
 O comando CREATEROOMS é usado para criar uma nova sala. Recebe o parâmetro nome da sala (só uma palavra), o usuário <b>deve</b> estar no menu principal do bate-papo:
 
-<img src = "https://github.com/islansilva/BD/blob/master/images/createrooms.png" width = 430 height = 230 />
+![createrooms](https://github.com/islansilva/BD/blob/master/images/createrooms.png) 
 
 * EXITROOM<br />
 O comando EXITROOM é usado para sair de uma sala. Não recebe parâmetro, o usuário <b>deve</b> estar em uma sala:
 
-<img src = "https://github.com/islansilva/BD/blob/master/images/exitroom.png" width = 500 height = 290 />
+![exitroom](https://github.com/islansilva/BD/blob/master/images/exitroom.png) 
 
 * QUIT<br />
 O comando QUIT é usado para encerrar o usuário. Não recebe parâmetro, o usuário pode inserir o comando estando ou não em uma sala:
 
-<img src = "https://github.com/islansilva/BD/blob/master/images/quit.png" width = 450 height = 270 />
+![quit](https://github.com/islansilva/BD/blob/master/images/quit.png) 
 
 * HELP<br />
 O comando HELP é usado para exibir a lista de comandos. Não recebe parâmetro, o usuário pode inserir o comando estando ou não em uma sala:
 
-<img src = "https://github.com/islansilva/BD/blob/master/images/help.png" width = 500 height = 300 />
+![help](https://github.com/islansilva/BD/blob/master/images/help.png) 
